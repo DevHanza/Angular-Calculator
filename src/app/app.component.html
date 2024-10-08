@@ -13,15 +13,18 @@
     <div
       class="w-full h-40 bg-gradient-to-b from-gray-800 to-gray-700 text-right"
     >
-      <!-- function screen -->
+      <!-- operator screen -->
       <div class="w-full py-5 px-6 text-2xl text-white font-thin">
-        {{ funcT }}
+        {{ subScreen }}
       </div>
 
       <!-- number screen -->
-      <div class="w-full py-5 px-6 text-6xl text-white font-thin">
-        {{ calValue | number }}
+      <div class="w-full py-5 px-6 text-6xl text-white font-thin"
+      >
+        {{ mainScreen | number }} {{errScreen}}
       </div>
+
+      
     </div>
     <!-- calculator button area -->
     <div class="w-full bg-gradient-to-b from-red-500 to-red-800">
@@ -31,7 +34,7 @@
         <!-- clear button -->
         <div class="w-2/4 border-b border-r border-red-400">
           <button
-            (click)="onClickValue('c', 'function')"
+            (click)="clearScreen()"
             class="w-full h-16 outline-none hover:bg-red-700 hover:bg-opacity-20 text-white text-xl font-light"
           >
             C
@@ -41,7 +44,7 @@
         <!-- percentage button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('%', 'function')"
+          (click)="getOperator('%')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             %
@@ -51,7 +54,7 @@
         <!-- divide button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('/', 'function')"
+          (click)="getOperator('/')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             /
@@ -66,7 +69,7 @@
         <!-- number 7 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('7', 'number')"
+            (click)="getNumber('7')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             7
@@ -77,7 +80,7 @@
         <!-- number 8 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-            (click)="onClickValue('8', 'number')"
+          (click)="getNumber('8')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             8
@@ -88,7 +91,7 @@
         <!-- number 9 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('9', 'number')"
+          (click)="getNumber('9')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             9
@@ -98,7 +101,7 @@
         <!-- multiplication button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('*', 'function')"
+          (click)="getOperator('*')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             *
@@ -114,7 +117,7 @@
         <!-- number 4 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('4', 'number')"
+          (click)="getNumber('4')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             4
@@ -125,7 +128,7 @@
         <!-- number 5 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('5', 'number')"
+          (click)="getNumber('5')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             5
@@ -136,7 +139,7 @@
         <!-- number 6 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('6', 'number')"
+          (click)="getNumber('6')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             6
@@ -147,7 +150,7 @@
         <!-- minus button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('-', 'function')"
+          (click)="getOperator('-')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             -
@@ -163,7 +166,7 @@
         <!-- number 1 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('1', 'number')"
+          (click)="getNumber('1')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             1
@@ -174,7 +177,7 @@
         <!-- number 2 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('2', 'number')"
+          (click)="getNumber('2')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             2
@@ -185,7 +188,7 @@
         <!-- number 3 button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('3', 'number')"
+          (click)="getNumber('3')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             3
@@ -195,7 +198,7 @@
         <!-- plus button -->
         <div class="w-1/4 border-r border-b border-red-400 text-white">
           <button
-          (click)="onClickValue('+', 'function')"
+          (click)="getOperator('+')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             +
@@ -212,7 +215,7 @@
         <div class="w-1/4 border-r border-red-400 text-white">
           <!-- number 0 button -->
           <button
-          (click)="onClickValue('0', 'number')"
+          (click)="getNumber('0')"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             0
@@ -222,7 +225,7 @@
         <div class="w-1/4 border-r border-red-400 text-white">
           <!-- decimal button -->
           <button
-          (click)="onClickValue('.', 'number')"
+          
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             .
@@ -232,7 +235,7 @@
         <div class="w-2/4 border-r border-red-400 text-white">
           <!-- Equal button -->
           <button
-          (click)="onClickValue('=', 'function')"
+          (click)="calculate()"
             class="w-full h-16 outline-none focus:outline-none hover:bg-red-700 hover:bg-opacity-50 text-xl font-light"
           >
             =

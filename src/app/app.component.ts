@@ -1,111 +1,56 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, CommonModule],
+  imports: [RouterOutlet, CommonModule, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
 export class AppComponent {
   title = 'Angular Calculator';
 
-  calValue: number = 0;
-  funcT: any = 'NoFunction';
+  operators: string[] = ['%', '/', '*', '-', '+'];
+  mainScreen: string = '0';
+  subScreen: string = '';
+  errScreen: string = '';
 
-  calNumber: string = 'noValue';
-
-  firstNumber: number = 0;
-  secondNumber: number = 0;
-
-  onClickValue(val: string, type: any) {
-    if (type == 'number') {
-      this.onNumberClick(val);
-    } else if (type == 'function') {
-      this.onFunctionClick(val);
-    }
+  getNumber(num: string) {
+    this.errScreen = "";
+    this.mainScreen += num;
+    this.subScreen += num;
   }
 
-  onNumberClick(val: string) {
-    if (this.calNumber != 'noValue') {
-      this.calNumber = this.calNumber + val;
-    } else {
-      this.calNumber = val;
+  getOperator(operator: string) {
+    let lastChar = this.subScreen.slice(-1);
+
+    if (lastChar == operator) {
+      console.log(lastChar);
+      return;
     }
 
-    this.calValue = parseFloat(this.calNumber);
+    this.subScreen += operator;
+    this.mainScreen = '0';
   }
 
-  onFunctionClick(val: string) {
-
-    // call the clear all method when click the C function
-
-    if(val == 'c') {
-      this.clearAll;
-    }
-
-    if (this.funcT == 'NoFunction') {
-      this.firstNumber = this.calValue;
-      this.calValue = 0;
-      this.calNumber = 'noValue';
-      this.funcT = val;
-    } else if (this.funcT != 'NoFunction') {
-      this.secondNumber = this.calValue;
-
-      // lets do calculation
-      this.valueCalculate(val);
-    }
-  }
-  valueCalculate(val: string) {
-    if(this.funcT == "+") {
-      const Total = this.firstNumber + this.secondNumber
-      this.totalAssignValues(Total, val);
-    }
-    if(this.funcT == "-") {
-      const Total = this.firstNumber + this.secondNumber
-      this.totalAssignValues(Total, val);
-    }
-    if(this.funcT == "*") {
-      const Total = this.firstNumber * this.secondNumber
-      this.totalAssignValues(Total, val);
-    }
-    if(this.funcT == "/") {
-      const Total = this.firstNumber / this.secondNumber
-      this.totalAssignValues(Total, val);
-    }
-    if(this.funcT == "%") {
-      const Total = this.firstNumber % this.secondNumber
-      this.totalAssignValues(Total, val);
-    }
+  clearScreen() {
+    this.errScreen = '';
+    this.mainScreen = '';
+    this.subScreen = '';
   }
 
-  
-  totalAssignValues(Total: number, val: string) {
-    this.calValue = Total;
-    this.firstNumber = Total;
-    this.secondNumber = 0;
-    this.calNumber = 'noValue';
-    this.funcT = val;
-    if(val == "="){ this.onEqualPress()};
+  calculate() {
+    try {
+      this.errScreen = "";
+      let answer = eval(this.subScreen);
+      this.mainScreen = answer;
+    } catch (error) {
+      // console.log(error);
+      this.mainScreen = this.subScreen = "";
+      this.errScreen = "ERROR!";
+    }
   }
-
-  onEqualPress () {
-    this.firstNumber = 0;
-    this.secondNumber = 0;
-    this.funcT = 'NoFunction';
-    this.calNumber = 'noValue'
-  }
-
-  clearAll(){
-    this.firstNumber = 0;
-    this.secondNumber = 0;
-    this.calValue - 0;
-    this.funcT = "NoFunction";
-    this.calNumber = "noValue";
-  }
-
 }
-
-// https://www.youtube.com/watch?v=EuJsvyFz2kA&t=33m31s
