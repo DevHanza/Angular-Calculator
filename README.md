@@ -1,5 +1,5 @@
 # Angular Calculator
-
+Simple Calculator with Angular v18 🧮
 ## Feel free to introduce your bugs at [Issues](https://github.com/DevHanza/Angular-Calculator/issues).🐛
 ### Preview
 
